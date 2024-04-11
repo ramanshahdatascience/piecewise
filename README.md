@@ -39,7 +39,8 @@ assets like a vehicle or home). This is all routine Excel spreadsheet work.
 These two things meet through government tax and support programs that aren't
 linear, hence not nearly as straightforward.
 
-But government programs are usually piecewise linear. If we can wrangle them,
+But government programs are usually piecewise linear: linear combinations of
+translations of Rectified Linear Unit (ReLU) functions. If we can wrangle them,
 we can reduce the web of Federal and state income taxes, the Earned Income Tax
 Credit, subsidies for healthcare, etc, to one or a few scary Excel formulas
 that will be acceptably adequate over a big enough range of business scaling to
