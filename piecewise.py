@@ -90,6 +90,72 @@ class ReluLC:
         active_terms = [term for term in self.relu_terms if x >= term[1]]
         return self.constant_term + sum(term[0] * (x - term[1]) for term in active_terms)
 
+    def wrap_with(self, other):
+        '''Compose two ReluLCs into a new ReluLC.
+
+        Starting from two piecewise linear functions self(x) and other(x),
+        self.wrap_with(other) constructs the piecewise linear function
+        other(self(x)).
+
+        `self` must be nondecreasing.'''
+
+        slopes = [0]
+        for relu_term in self.relu_terms:
+            slopes.append(slopes[-1] + relu_term[0])
+        if not all(slope >= 0 for slope in slopes):
+            raise ValueError('Inner argument of composition must be nondecreasing.')
+
+        new_constant_term = other.constant_term
+        new_relu_terms = []
+
+        for other_term in other.relu_terms:
+            # For each relu term in other: Find cut point, if any, where a
+            # contribution to the total expression becomes positive, then
+            # compute and gather all relevant terms.
+
+            self_terminal_slope = sum(term[0] for term in self.relu_terms)
+            arg_vals = [self(term[1]) - other_term[1] for term in self.relu_terms]
+            if arg_vals[-1] <= 0 and not self_terminal_slope > 0:
+                # The argument of the outer relu term is always nonpositive
+                # (contributing no terms to the simplified expression) if and
+                # only if it is nonpositive at the final increase in slope and
+                # the terminal slope is zero.
+                continue
+            elif arg_vals[0] > 0:
+                # Argument of outer relu is always positive; this term in other
+                # always contributes
+                new_constant_term += other_term[0] * (self.constant_term - other_term[1])
+                new_relu_terms.extend([(other_term[0] * term[0], term[1])
+                    for term in self.relu_terms])
+            else:
+                # Argument of outer relu crosses from nonpositive to positive;
+                # need to find the point where that happens and compute terms
+                # accordingly
+                assert arg_vals[0] <= 0
+                assert arg_vals[-1] > 0 or self_terminal_slope > 0
+
+                # Find rightmost index where the argument of outer relu is still nonpositive
+                rightmost_nonpositive = max(i for i, val in enumerate(arg_vals) if val <= 0)
+
+                # Solve for where the argument crosses zero
+                slope_at_cutpoint = sum(term[0]
+                        for term in self.relu_terms[0:(rightmost_nonpositive + 1)])
+                new_cutpoint = self.relu_terms[rightmost_nonpositive][1] \
+                        - arg_vals[rightmost_nonpositive] / slope_at_cutpoint
+
+                # The term with a new cutpoint
+                new_relu_terms.append((other_term[0] * slope_at_cutpoint, new_cutpoint))
+
+                # Terms to the right of that term, if any
+                if rightmost_nonpositive < len(self.relu_terms) - 1:
+                    new_relu_terms.extend([(other_term[0] * term[0], term[1])
+                        for term in self.relu_terms[rightmost_nonpositive + 1:]])
+
+        return ReluLC(new_constant_term, *new_relu_terms)
+
+    def floor_at_zero(self):
+        return self.wrap_with(ReluLC(0, (1, 0)))
+
     def excel_formula(self, target_cell):
         parts = ['=']
 
