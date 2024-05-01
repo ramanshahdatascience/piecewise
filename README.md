@@ -2,48 +2,55 @@
 
 *Under construction*
 
-This repo contains some tooling to simplify linear combinations of piecewise
-linear functions, then finally emit them (and their first derivative) as Excel
-formulas.
+This repo contains some Python tooling to simplify linear combinations of
+piecewise linear functions, then finally emit them (and their first
+derivatives) as Excel formulas.
 
 The motivating application comes from my engagements with very small social
 enterprise clients, virtually all of which show up with the same story. There's
-a fledgling sole proprietorship or disregarded-entity LLC. It has material
-operations - often exhaustingly busy operations, in fact. But it's
-fundamentally not big enough to put food on its owner's table.  The owner
-benefits from government support - perhaps paying almost zero in income taxes
-and getting free healthcare. The owner is steadily liquidating wealth, often
+a sole proprietorship or disregarded-entity LLC. It has productive, material
+operations - often exhaustingly busy operations. But it's fundamentally not big
+enough to put food on its owner's table.  The owner benefits from government
+support, perhaps paying almost zero in income taxes and getting free
+healthcare. The owner is steadily liquidating their personal wealth, often
 obscured by complexities like real estate windfalls, inheritances, family help,
-grants, increasing debt, or deferred maintenance. And I get the call to apply
-one or two dozen hours of data science expertise to clear up the numbers.
+grants, increasing debt, or deferred maintenance.  And I get a call to apply a
+couple dozen hours of my expertise to clear up the numbers.
 
-**How much will the owner need to grow the business to earn a sustainable
-living, taking into account that taxes and health insurance premiums will wake
-up?** To double the cash available to fund their lifestyle, they'll have to
-more than double their profit. But how much more than double? This question
-can be of great strategic importance in assessing whether a business can
-sustainably fund it's owner's survival, and if so, how that would look.
-Sometimes, there is a scale that seems achievable and accords with what the
-owner values about their enterprise. Sometimes the scale required would
-alienate the animating purpose of the venture, and the best thing would be to
-shut the business down. These are big, hard questions for a social entrepreneur
-that demand precise answers.
+**How much will the owner need to grow the enterprise to earn a sustainable
+living, taking into account that government support will roll off?** One must
+reconcile that it gets easier to make money with scale because fixed costs only
+have to be paid once, but harder to make money with scale because of the loss
+of the government support. Capturing these nonlinear behaviors with some
+precision can be strategically critical. Sometimes, my economic modeling
+reveals a plausible scale at which the owner both makes a living and stays true
+to the purpose of their social enterprise.  Then the way forward is to push on
+marketing to grow demand to the needed scale. Other times, there is no such
+plausible scale.  For example, many social enterprises are built around
+artisanal local production, or they specialize in employing workers from a
+marginalized community. These operational constraints based on social-purpose
+considerations could cap out before the social enterprise is financially
+successful. The way forward in this case, sadly, is either to relinquish the
+prosocial commitments or shut the enterprise down. That's a fraught
+consideration for a social entrepreneur, and it demands clarity of mind.
 
 Analyzing prospective business revenue and profit, including scaling of
 variable costs, is often reasonably straightforward from a decent set of books,
 as the math is linear. Analyzing the owner's burn rate (cost of a lifestyle
 after tax) is reasonably straightforward from a variety of personal financial
-data and some accounting assumptions (e.g. for depreciation of personal fixed
-assets like a vehicle or home). This is all routine Excel spreadsheet work.
+data and some accounting assumptions (e.g., capitalizing personal fixed assets
+like a vehicle or home). This is all routine Excel spreadsheet work.
 
-These two things meet through government tax and support programs that aren't
-linear, hence not nearly as straightforward.
+These two things meet through government support programs that aren't linear,
+hence not nearly as straightforward.
 
-But government programs are usually piecewise linear: linear combinations of
-translations of Rectified Linear Unit (ReLU) functions. If we can wrangle them,
-we can reduce the web of Federal and state income taxes, the Earned Income Tax
-Credit, subsidies for healthcare, etc, to one or a few scary Excel formulas
-that will be acceptably adequate over a big enough range of business scaling to
-answer the animating question.
+But government support programs are usually piecewise linear. In fact, many of
+them can be written down as linear combinations of translations of Rectified
+Linear Unit (ReLU) functions - piecewise linear, continuous functions of profit
+that are constant to the left. If we can wrangle this family of functions and
+emit them as Excel formulas, we can embed the web of Federal and state income
+taxes, the Earned Income Tax Credit, the Premium Tax Credit, Medicaid, etc.,
+within a spreadsheet analysis that will be accurate enough over a big enough
+range of scaling to answer the central question.
 
 That's the goal of this repo.
