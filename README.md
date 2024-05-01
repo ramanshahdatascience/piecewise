@@ -20,7 +20,7 @@ one or two dozen hours of data science expertise to clear up the numbers.
 **How much will the owner need to grow the business to earn a sustainable
 living, taking into account that taxes and health insurance premiums will wake
 up?** To double the cash available to fund their lifestyle, they'll have to
-more than double their revenue. But how much more than double? This question
+more than double their profit. But how much more than double? This question
 can be of great strategic importance in assessing whether a business can
 sustainably fund it's owner's survival, and if so, how that would look.
 Sometimes, there is a scale that seems achievable and accords with what the
